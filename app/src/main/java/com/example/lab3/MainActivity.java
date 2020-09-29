@@ -32,52 +32,52 @@ public class MainActivity extends AppCompatActivity {
     public void onBtn0Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num0));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn1Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num1));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn2Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num2));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn3Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num3));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn4Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num4));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn5Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num5));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn6Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num6));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn7Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num7));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn8Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num8));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtn9Click(View view) {
         displayData.setText(calc.checkForZero(displayData.getText().toString()));
         this.displayData.append(getString(R.string.num9));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtnBkspcClick(View view) {
         textas = calc.eraseLastChar(displayData.getText().toString());
@@ -86,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onBtnChangeSign(View view) {
         displayData.setText(calc.changeSign(displayData.getText().toString()));
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
     }
     public void onBtnSum(View view) {
         //calc.setFirstVariable(displayData.getText().toString(), getString(R.string.plus));
@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void onEqualClick(View view){
-        calc.setVarable(displayData.getText().toString());
+        calc.setVariable(displayData.getText().toString());
         calc.compleatOperation();
         displayData.setText(calc.getFirsVariable());
         getDisplayDataAll.setText("");
@@ -136,7 +136,7 @@ class Callculator{
         varSecond = "";
         lastOperation="";
     }
-    void setVarable(String variable){
+    void setVariable(String variable){
             if (stateSecond == false){
                 varFirst = variable;
             } else {
@@ -149,13 +149,13 @@ class Callculator{
                 lastOperation = operation;
                 stateSecond = true;
             } else{
-                if (lastOperation.compareTo("+") == 0) {
+                if (operation.compareTo("+") == 0) {
                     sumVariables();
-                } else if (lastOperation.compareTo("-") == 0) {
+                } else if (operation.compareTo("-") == 0) {
                     diferenceVariables();
-                } else if (lastOperation.compareTo("*") == 0) {
+                } else if (operation.compareTo("*") == 0) {
                     multiplyVariables();
-                } else if (lastOperation.compareTo("/") == 0) {
+                } else if (operation.compareTo("/") == 0) {
                     divideVariables();
                 }
 
@@ -166,24 +166,6 @@ class Callculator{
             return false;
         }
     }
-    /*
-    void setFirstVariable(String variable,String opeation){
-        if ( varFirst != null && varFirst.length() > 0){
-            if (opeation.compareTo("+") == 0){
-                sumVariables(variable);
-            } else if (opeation.compareTo("-") == 0){
-                diferenceVariables(variable);
-            } else if (opeation.compareTo("*") == 0){
-                multiplyVariables(variable);
-            } else if (opeation.compareTo("/") == 0){
-                divisionVariables(variable);
-            }
-            lastOperation = opeation;
-
-        } else {
-            varFirst = variable;
-        }
-    }*/
     String getDataToDisplay(String operation){
         return varFirst + operation;
     }
@@ -240,15 +222,13 @@ class Callculator{
         }
     }
     void divideVariables(){
-        if (varFirst.contains(".") || varSecond.contains(".")){
-            varFirst = String.valueOf(Float.parseFloat(varFirst) / Float.parseFloat(varSecond));
-        } else {
-            varFirst = String.valueOf(Integer.parseInt(varFirst) / Integer.parseInt(varSecond));
-        }
+        varFirst = String.valueOf(Float.parseFloat(varFirst) / Float.parseFloat(varSecond));
+
     }
     String eraseLastChar(String data){
         if (data != null && data.length() > 0 ) {
             data = data.substring(0, data.length() - 1);
+            setVariable(data);
         }
         return data;
     }
