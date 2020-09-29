@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">Lab3</string>
     <string name="displayDft">0</string>
+    <string name="empty">No data entered</string>
     <string name="MC">MC</string>
     <string name="MR">MR</string>
     <string name="MS">MS</string>
