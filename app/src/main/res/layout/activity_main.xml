@@ -26,6 +26,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
         android:layout_marginEnd="20dp"
+        android:onClick="onBtnDotClick"
         android:text="@string/point"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -54,6 +55,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
         android:text="@string/MC"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.076"
@@ -82,6 +84,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
         android:text="@string/MR"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.284"
@@ -133,7 +136,7 @@
         app:layout_constraintVertical_bias="0.306" />
 
     <Button
-        android:id="@+id/btnPM2"
+        android:id="@+id/btnChngSign"
         android:layout_width="60dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
@@ -151,6 +154,7 @@
         android:layout_width="60dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
+        android:onClick="onOverXClick"
         android:text="@string/oneOverX"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -180,6 +184,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
         android:text="@string/MMinus"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.934"
@@ -216,20 +221,6 @@
         app:layout_constraintTop_toBottomOf="@+id/textDisplay"
         app:layout_constraintVertical_bias="0.306"
         tools:ignore="OnClick" />
-
-    <Button
-        android:id="@+id/btnCE"
-        android:layout_width="60dp"
-        android:layout_height="45dp"
-        android:layout_marginTop="4dp"
-        android:layout_marginEnd="8dp"
-        android:text="@string/CE"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.291"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.334" />
 
     <Button
         android:id="@+id/btn3"
@@ -281,6 +272,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
         android:text="@string/MPlus"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.72"
@@ -367,6 +359,7 @@
         android:layout_width="60dp"
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
+        android:enabled="false"
         android:text="@string/percent"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
@@ -396,6 +389,7 @@
         android:layout_height="45dp"
         android:layout_marginTop="4dp"
         android:text="@string/MS"
+        android:enabled="false"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.509"
@@ -413,5 +407,33 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.022" />
+
+    <ImageButton
+        android:id="@+id/btnSqrt"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/sqrt"
+        android:onClick="onSqrtClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.934"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.338"
+        app:srcCompat="@drawable/sqrt" />
+
+    <ImageButton
+        android:id="@+id/btnSq"
+        android:layout_width="60dp"
+        android:layout_height="45dp"
+        android:contentDescription="@string/sq"
+        android:onClick="onSqClick"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.284"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.338"
+        app:srcCompat="@drawable/xsquare" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

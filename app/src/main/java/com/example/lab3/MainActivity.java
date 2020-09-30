@@ -11,7 +11,7 @@ public class MainActivity extends AppCompatActivity {
 
     TextView displayData;
     TextView getDisplayDataAll;
-    Callculator calc = new Callculator();
+    Calculator calc = new Calculator();
     String textas;
     Toast toast;
 
@@ -89,9 +89,6 @@ public class MainActivity extends AppCompatActivity {
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtnSum(View view) {
-        //calc.setFirstVariable(displayData.getText().toString(), getString(R.string.plus));
-        //getDisplayDataAll.setText( calc.getDataToDisplay(getString(R.string.plus)) );
-        //displayData.setText("");
         calc.setOperation(getString(R.string.plus));
         getDisplayDataAll.setText( calc.getDataToDisplay(getString(R.string.plus)) );
         displayData.setText("");
@@ -118,15 +115,22 @@ public class MainActivity extends AppCompatActivity {
         calc.compleatOperation();
         displayData.setText(calc.getFirsVariable());
         getDisplayDataAll.setText("");
-        //calc.compleatOperation(displayData.getText().toString());
-        //displayData.setText(calc.getFirsVariable());
-        //getDisplayDataAll.setText("");
-        //calc.setFirstVariable();
-        toast.show();
+//        toast.show();
     }
-
+    public void onSqrtClick(View view){
+        displayData.setText(calc.getSqrt(displayData.getText().toString()));
+    }
+    public void onSqClick(View view){
+        displayData.setText(calc.getSq(displayData.getText().toString()));
+    }
+    public void onOverXClick(View view){
+        displayData.setText(calc.oneOverX(displayData.getText().toString()));
+    }
+    public void onBtnDotClick(View view){
+        this.displayData.append(getString(R.string.point));
+    }
 }
-class Callculator{
+class Calculator{
     String varFirst, varSecond;
     boolean stateSecond = false;
     String lastOperation;
@@ -148,16 +152,11 @@ class Callculator{
             if (stateSecond == false){
                 lastOperation = operation;
                 stateSecond = true;
-            } else{
-                if (operation.compareTo("+") == 0) {
-                    sumVariables();
-                } else if (operation.compareTo("-") == 0) {
-                    diferenceVariables();
-                } else if (operation.compareTo("*") == 0) {
-                    multiplyVariables();
-                } else if (operation.compareTo("/") == 0) {
-                    divideVariables();
-                }
+            } else {
+                compleatOperation();
+                lastOperation = operation;
+                stateSecond=true;
+
 
             }
 
@@ -166,17 +165,20 @@ class Callculator{
             return false;
         }
     }
+    String getSqrt(String data){
+        String currentValue;
+        //stateSecond = false;
+        currentValue = String.valueOf(Math.sqrt(Float.parseFloat(data)));
+        setVariable(currentValue);
+        return currentValue;
+    }
     String getDataToDisplay(String operation){
         return varFirst + operation;
     }
     String getFirsVariable(){
         return varFirst;
     }
-    void setFirstVariable(){
-        varFirst = "";
-        lastOperation="";
-    }
-    String checkForZero(String currentNumber){
+    public String checkForZero(String currentNumber){
         if (currentNumber.compareTo("0") == 0){
             return "";
         }
@@ -185,7 +187,7 @@ class Callculator{
         }
 
     }
-    void compleatOperation(){
+    public void compleatOperation(){
         if (stateSecond == true){
             if (lastOperation.compareTo("+") == 0) {
                 sumVariables();
@@ -200,39 +202,39 @@ class Callculator{
         }
 
     }
-    void sumVariables(){
+    private void sumVariables(){
         if (varFirst.contains(".") || varSecond.contains(".")){
             varFirst = String.valueOf(Float.parseFloat(varFirst) + Float.parseFloat(varSecond));
         } else {
             varFirst = String.valueOf(Integer.parseInt(varFirst) + Integer.parseInt(varSecond));
         }
     }
-    void diferenceVariables(){
+    private void diferenceVariables(){
         if (varFirst.contains(".") || varSecond.contains(".")){
             varFirst = String.valueOf(Float.parseFloat(varFirst) - Float.parseFloat(varSecond));
         } else {
             varFirst = String.valueOf(Integer.parseInt(varFirst) - Integer.parseInt(varSecond));
         }
     }
-    void multiplyVariables(){
+    private void multiplyVariables(){
         if (varFirst.contains(".") || varSecond.contains(".")){
             varFirst = String.valueOf(Float.parseFloat(varFirst) * Float.parseFloat(varSecond));
         } else {
             varFirst = String.valueOf(Integer.parseInt(varFirst) * Integer.parseInt(varSecond));
         }
     }
-    void divideVariables(){
+    private void divideVariables(){
         varFirst = String.valueOf(Float.parseFloat(varFirst) / Float.parseFloat(varSecond));
 
     }
-    String eraseLastChar(String data){
+    public String eraseLastChar(String data){
         if (data != null && data.length() > 0 ) {
             data = data.substring(0, data.length() - 1);
             setVariable(data);
         }
         return data;
     }
-    String changeSign(String data){
+    public String changeSign(String data){
         float numberF;
         int numberI;
         if (data.contains(".")){
@@ -242,5 +244,28 @@ class Callculator{
             numberI = Integer.parseInt(data) * -1;
             return String.valueOf(numberI);
         }
+    }
+
+    public String getSq(String data) {
+        String currentValue;
+        int numberI;
+        float numberF;
+        if (data.contains(".")){
+            numberF = Float.parseFloat(data);
+            numberF *= numberF;
+            currentValue = String.valueOf(numberF);
+        }else {
+            numberI = Integer.parseInt(data);
+            numberI *= numberI;
+            currentValue = String.valueOf(numberI);
+        }
+        setVariable(currentValue);
+        return  currentValue;
+    }
+
+    public String oneOverX(String toString) {
+        String number = String.valueOf(1 / Float.parseFloat(toString));
+        setVariable(number);
+        return number;
     }
 }
