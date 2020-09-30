@@ -2,6 +2,8 @@
     <string name="app_name">Lab3</string>
     <string name="displayDft">0</string>
     <string name="empty">No data entered</string>
+    <string name="positive">Cant be negative numbers</string>
+    <string name="zero">Can not do division by zero</string>
     <string name="MC">MC</string>
     <string name="MR">MR</string>
     <string name="MS">MS</string>

@@ -3,6 +3,7 @@ package com.example.lab3;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -13,7 +14,7 @@ public class MainActivity extends AppCompatActivity {
     TextView getDisplayDataAll;
     Calculator calc = new Calculator();
     String textas;
-    Toast toast;
+    Toast message;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,8 +22,9 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.displayData = findViewById(R.id.textDisplay);
         this.getDisplayDataAll = findViewById(R.id.textDisplayAll);
-        toast =Toast.makeText(getApplicationContext(),R.string.empty,Toast.LENGTH_SHORT);
-        toast.setMargin(50,50);
+        message =Toast.makeText(getApplicationContext(),R.string.positive,Toast.LENGTH_SHORT);
+        message.setGravity(Gravity.CENTER_VERTICAL&Gravity.CENTER_HORIZONTAL,0,0);
+        //message.setMargin(50,50);
     }
     public void onClearClick(View view) {
         calc.setDefaultStates();
@@ -30,52 +32,72 @@ public class MainActivity extends AppCompatActivity {
         getDisplayDataAll.setText("");
     }
     public void onBtn0Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num0));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn1Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num1));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn2Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num2));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn3Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num3));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn4Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num4));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn5Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num5));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn6Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num6));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn7Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num7));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn8Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }   
         this.displayData.append(getString(R.string.num8));
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtn9Click(View view) {
-        displayData.setText(calc.checkForZero(displayData.getText().toString()));
+        if (calc.checkForZero(displayData.getText().toString())){
+            displayData.setText("");
+        }        
         this.displayData.append(getString(R.string.num9));
         calc.setVariable(displayData.getText().toString());
     }
@@ -115,157 +137,27 @@ public class MainActivity extends AppCompatActivity {
         calc.compleatOperation();
         displayData.setText(calc.getFirsVariable());
         getDisplayDataAll.setText("");
-//        toast.show();
     }
     public void onSqrtClick(View view){
-        displayData.setText(calc.getSqrt(displayData.getText().toString()));
+        String input = displayData.getText().toString();
+        if (calc.checkIfPositiveNumber(input)){
+            displayData.setText(calc.getSqrt(input));
+        }else{
+            message.setText(R.string.positive);
+            message.show();
+        }
+
+
     }
     public void onSqClick(View view){
+
         displayData.setText(calc.getSq(displayData.getText().toString()));
+
     }
     public void onOverXClick(View view){
         displayData.setText(calc.oneOverX(displayData.getText().toString()));
     }
     public void onBtnDotClick(View view){
         this.displayData.append(getString(R.string.point));
-    }
-}
-class Calculator{
-    String varFirst, varSecond;
-    boolean stateSecond = false;
-    String lastOperation;
-    void setDefaultStates(){
-        stateSecond = false;
-        varFirst = "";
-        varSecond = "";
-        lastOperation="";
-    }
-    void setVariable(String variable){
-            if (stateSecond == false){
-                varFirst = variable;
-            } else {
-                varSecond = variable;
-            }
-    }
-    boolean setOperation(String operation){
-        if ( varFirst != null && varFirst.length() > 0){
-            if (stateSecond == false){
-                lastOperation = operation;
-                stateSecond = true;
-            } else {
-                compleatOperation();
-                lastOperation = operation;
-                stateSecond=true;
-
-
-            }
-
-            return true;
-        } else {
-            return false;
-        }
-    }
-    String getSqrt(String data){
-        String currentValue;
-        //stateSecond = false;
-        currentValue = String.valueOf(Math.sqrt(Float.parseFloat(data)));
-        setVariable(currentValue);
-        return currentValue;
-    }
-    String getDataToDisplay(String operation){
-        return varFirst + operation;
-    }
-    String getFirsVariable(){
-        return varFirst;
-    }
-    public String checkForZero(String currentNumber){
-        if (currentNumber.compareTo("0") == 0){
-            return "";
-        }
-        else {
-            return currentNumber;
-        }
-
-    }
-    public void compleatOperation(){
-        if (stateSecond == true){
-            if (lastOperation.compareTo("+") == 0) {
-                sumVariables();
-            } else if (lastOperation.compareTo("-") == 0) {
-                diferenceVariables();
-            } else if (lastOperation.compareTo("*") == 0) {
-                multiplyVariables();
-            } else if (lastOperation.compareTo("/") == 0) {
-                divideVariables();
-            }
-            stateSecond=false;
-        }
-
-    }
-    private void sumVariables(){
-        if (varFirst.contains(".") || varSecond.contains(".")){
-            varFirst = String.valueOf(Float.parseFloat(varFirst) + Float.parseFloat(varSecond));
-        } else {
-            varFirst = String.valueOf(Integer.parseInt(varFirst) + Integer.parseInt(varSecond));
-        }
-    }
-    private void diferenceVariables(){
-        if (varFirst.contains(".") || varSecond.contains(".")){
-            varFirst = String.valueOf(Float.parseFloat(varFirst) - Float.parseFloat(varSecond));
-        } else {
-            varFirst = String.valueOf(Integer.parseInt(varFirst) - Integer.parseInt(varSecond));
-        }
-    }
-    private void multiplyVariables(){
-        if (varFirst.contains(".") || varSecond.contains(".")){
-            varFirst = String.valueOf(Float.parseFloat(varFirst) * Float.parseFloat(varSecond));
-        } else {
-            varFirst = String.valueOf(Integer.parseInt(varFirst) * Integer.parseInt(varSecond));
-        }
-    }
-    private void divideVariables(){
-        varFirst = String.valueOf(Float.parseFloat(varFirst) / Float.parseFloat(varSecond));
-
-    }
-    public String eraseLastChar(String data){
-        if (data != null && data.length() > 0 ) {
-            data = data.substring(0, data.length() - 1);
-            setVariable(data);
-        }
-        return data;
-    }
-    public String changeSign(String data){
-        float numberF;
-        int numberI;
-        if (data.contains(".")){
-            numberF = Float.parseFloat(data) * -1;
-            return String.valueOf(numberF);
-        } else{
-            numberI = Integer.parseInt(data) * -1;
-            return String.valueOf(numberI);
-        }
-    }
-
-    public String getSq(String data) {
-        String currentValue;
-        int numberI;
-        float numberF;
-        if (data.contains(".")){
-            numberF = Float.parseFloat(data);
-            numberF *= numberF;
-            currentValue = String.valueOf(numberF);
-        }else {
-            numberI = Integer.parseInt(data);
-            numberI *= numberI;
-            currentValue = String.valueOf(numberI);
-        }
-        setVariable(currentValue);
-        return  currentValue;
-    }
-
-    public String oneOverX(String toString) {
-        String number = String.valueOf(1 / Float.parseFloat(toString));
-        setVariable(number);
-        return number;
     }
 }
