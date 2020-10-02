@@ -33,4 +33,6 @@
     <string name="point">.</string>
     <string name="plus">+</string>
     <string name="equal">=</string>
+    <string name="pointError">cant add a point</string>
+    <string name="cantUseEqual">Inproper use of equal operation</string>
 </resources>

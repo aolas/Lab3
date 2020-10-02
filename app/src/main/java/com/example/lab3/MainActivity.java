@@ -13,6 +13,7 @@ public class MainActivity extends AppCompatActivity {
     TextView displayData;
     TextView getDisplayDataAll;
     Calculator calc = new Calculator();
+
     String textas;
     Toast message;
 
@@ -22,7 +23,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         this.displayData = findViewById(R.id.textDisplay);
         this.getDisplayDataAll = findViewById(R.id.textDisplayAll);
-        message =Toast.makeText(getApplicationContext(),R.string.positive,Toast.LENGTH_SHORT);
+        message =Toast.makeText(getApplicationContext(),"msg",Toast.LENGTH_SHORT);
         message.setGravity(Gravity.CENTER_VERTICAL&Gravity.CENTER_HORIZONTAL,0,0);
         //message.setMargin(50,50);
     }
@@ -111,37 +112,38 @@ public class MainActivity extends AppCompatActivity {
         calc.setVariable(displayData.getText().toString());
     }
     public void onBtnSum(View view) {
-        calc.setOperation(getString(R.string.plus));
-        getDisplayDataAll.setText( calc.getDataToDisplay(getString(R.string.plus)) );
+        getDisplayDataAll.setText( calc.setOperation(getString(R.string.plus)) );
         displayData.setText("");
     }
     public void onMinusClick(View view){
-        calc.setOperation(getString(R.string.minus));
-        getDisplayDataAll.setText( calc.getDataToDisplay(getString(R.string.minus)) );
+        getDisplayDataAll.setText( calc.setOperation(getString(R.string.minus)) );
         displayData.setText("");
 
     }
     public void onMultiplyClick(View view){
-        calc.setOperation(getString(R.string.multiply));
-        getDisplayDataAll.setText( calc.getDataToDisplay(getString(R.string.multiply)) );
+        getDisplayDataAll.setText( calc.setOperation(getString(R.string.multiply)));
         displayData.setText("");
     }
     public void onDivisionClick(View view){
-        calc.setOperation(getString(R.string.div));
-        getDisplayDataAll.setText( calc.getDataToDisplay(getString(R.string.div)) );
+        getDisplayDataAll.setText( calc.setOperation(getString(R.string.div)));
         displayData.setText("");
     }
 
     public void onEqualClick(View view){
-        calc.setVariable(displayData.getText().toString());
-        calc.compleatOperation();
-        displayData.setText(calc.getFirsVariable());
-        getDisplayDataAll.setText("");
+        if (calc.canUseEquual()) {
+            calc.setVariable(displayData.getText().toString());
+            calc.compleatOperation();
+            displayData.setText(calc.gettVariable());
+            getDisplayDataAll.setText("");
+        } else{
+            message.setText(R.string.cantUseEqual);
+            message.show();
+        }
     }
     public void onSqrtClick(View view){
         String input = displayData.getText().toString();
-        if (calc.checkIfPositiveNumber(input)){
-            displayData.setText(calc.getSqrt(input));
+        if (calc.checkIfPositiveNumber()){
+            displayData.setText(calc.getSqrt());
         }else{
             message.setText(R.string.positive);
             message.show();
@@ -150,14 +152,26 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onSqClick(View view){
-
         displayData.setText(calc.getSq(displayData.getText().toString()));
-
     }
     public void onOverXClick(View view){
-        displayData.setText(calc.oneOverX(displayData.getText().toString()));
+        if (!calc.checkForZero(displayData.getText().toString())){
+            calc.oneOverX();
+            displayData.setText(calc.gettVariable());
+        } else{
+            message.setText(R.string.zero);
+            message.show();
+        }
+
     }
     public void onBtnDotClick(View view){
-        this.displayData.append(getString(R.string.point));
+        if (!calc.checkIfDotExist(this.displayData.getText().toString())){
+            this.displayData.append(getString(R.string.point));
+            calc.validNumber(this.displayData.getText().toString());
+        } else{
+            message.setText(R.string.pointError);
+            message.show();
+        }
+
     }
 }

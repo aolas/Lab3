@@ -1,51 +1,80 @@
 package com.example.lab3;
 
 public class Calculator{
-    float varFirst, varSecond;
-    boolean stateSecond = false;
-    String lastOperation;
+    private float varFirst, varSecond;
+    private boolean stateSecond = false, useEqual = false, operationAdded = false, addPoint = false;
+    private String lastOperation;
     void setDefaultStates(){
         stateSecond = false;
+        operationAdded = false;
+        useEqual=false;
         varFirst = 0;
         varSecond = 0;
         lastOperation="";
     }
     void setVariable(String variable){
         if (stateSecond == false){
+
             varFirst = Float.parseFloat(variable);
+
         } else {
             varSecond = Float.parseFloat(variable);
+            useEqual = true;
         }
+        operationAdded = false;
     }
-    boolean setOperation(String operation){
-            if (stateSecond == false){
+
+    void setVariable(float variable){
+        if (stateSecond == false){
+            varFirst = variable;
+        } else {
+            varSecond = variable;
+            useEqual = true;
+        }
+        operationAdded = false;
+    }
+    String setOperation(String operation){
+            if (stateSecond == false || operationAdded == true){
                 lastOperation = operation;
                 stateSecond = true;
+                operationAdded = true;
             } else {
                 compleatOperation();
                 lastOperation = operation;
                 stateSecond=true;
             }
+            useEqual = false;
+            return varFirst + operation;
+    }
+    boolean canUseEquual(){
+        if (divisionByZeroOnEqual() && useEqual){
             return true;
+        } else{
+            return false;
+        }
     }
-    String getSqrt(String data){
-        String currentValue;
-        //stateSecond = false;
-        currentValue = String.valueOf(Math.sqrt(Float.parseFloat(data)));
-        setVariable(currentValue);
-        return currentValue;
+    String getSqrt(){
+        setVariable((float) Math.sqrt(getCurrentVariable()));
+        return gettVariable();
     }
-    String getDataToDisplay(String operation){
-        return varFirst + operation;
+    float getCurrentVariable(){
+        if (stateSecond){
+            return varSecond;
+        } else{
+            return varFirst;
+        }
     }
-    String getFirsVariable(){
-        return String.valueOf(varFirst);
+    String gettVariable(){
+        if (stateSecond){
+            return String.valueOf(varSecond);
+        } else {
+            return String.valueOf(varFirst);
+        }
+
     }
-    public boolean checkForZero(String currentNumber){
-        float numberF;
-        if (currentNumber != null && currentNumber.length() > 0 ){
-            numberF = Float.parseFloat(currentNumber);
-            if (numberF == 0) {
+    public boolean checkForZero(String input){
+        if (validNumber(input) ){
+            if (getCurrentVariable() == 0) {
                 return true;
             }else{
                 return false;
@@ -86,24 +115,41 @@ public class Calculator{
 
     }
     public String eraseLastChar(String data){
-        if (data != null && data.length() > 0 ) {
+        if (validNumber(data) == true ) {
             data = data.substring(0, data.length() - 1);
-            setVariable(data);
+            if(validNumber(data) != true) {
+                setVariable(0);
+                return "0";
+            }
         }
         return data;
     }
+
     public String changeSign(String data){
         float numberF;
-        int numberI;
-        if (data.contains(".")){
-            numberF = Float.parseFloat(data) * -1;
+        if (validNumber(data) == true){
+            numberF = getCurrentVariable() * -1;
+            setVariable(numberF);
             return String.valueOf(numberF);
-        } else{
-            numberI = Integer.parseInt(data) * -1;
-            return String.valueOf(numberI);
+        }else{
+            return "0";
         }
     }
+    public boolean validNumber(String input){
+        float number;
+        if (input != null && input.length() > 0 ){
+            try {
+                number = Float.parseFloat(input);
+                setVariable(number);
+            } catch (NumberFormatException nfe) {
+                return false;
+            }
+            return true;
+        }else{
+            return false;
+        }
 
+    }
     public String getSq(String input) {
         String currentValue;
         float numberF;
@@ -113,15 +159,24 @@ public class Calculator{
         setVariable(currentValue);
         return  currentValue;
     }
-    public boolean checkIfPositiveNumber(String input){
-        float numberF = Float.parseFloat(input);
+    public boolean checkIfPositiveNumber(){
+        float numberF = getCurrentVariable();
         return numberF >= 0;
     }
 
-    public String oneOverX(String toString) {
-        String number = String.valueOf(1 / Float.parseFloat(toString));
-        setVariable(number);
-        return number;
+    public void oneOverX() {
+        float numberF = 1 / getCurrentVariable();
+        setVariable(numberF);
     }
 
+    public boolean checkIfDotExist(String data) {
+        return data.contains(".");
+    }
+    public boolean divisionByZeroOnEqual(){
+        if (lastOperation.contains("/") && varSecond == 0){
+            return false;
+        } else{
+            return true;
+        }
+    }
 }
