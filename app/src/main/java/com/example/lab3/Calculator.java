@@ -3,7 +3,7 @@ package com.example.lab3;
 public class Calculator{
     private float varFirst, varSecond;
     private boolean stateSecond = false, useEqual = false, operationAdded = false, addPoint = false;
-    private String lastOperation;
+    private String lastOperation="";
     void setDefaultStates(){
         stateSecond = false;
         operationAdded = false;
@@ -47,7 +47,7 @@ public class Calculator{
             return varFirst + operation;
     }
     boolean canUseEquual(){
-        if (divisionByZeroOnEqual() && useEqual){
+        if (!divisionByZeroOnEqual() && useEqual){
             return true;
         } else{
             return false;
@@ -74,7 +74,7 @@ public class Calculator{
     }
     public boolean checkForZero(String input){
         if (validNumber(input) ){
-            if (getCurrentVariable() == 0) {
+            if (getCurrentVariable() == 0 && !input.contains(".")) {
                 return true;
             }else{
                 return false;
@@ -150,14 +150,12 @@ public class Calculator{
         }
 
     }
-    public String getSq(String input) {
-        String currentValue;
+    public String getSq() {
         float numberF;
-        numberF = Float.parseFloat(input);
+        numberF = getCurrentVariable();
         numberF *= numberF;
-        currentValue = String.valueOf(numberF);
-        setVariable(currentValue);
-        return  currentValue;
+        setVariable(numberF);
+        return gettVariable();
     }
     public boolean checkIfPositiveNumber(){
         float numberF = getCurrentVariable();
@@ -174,9 +172,9 @@ public class Calculator{
     }
     public boolean divisionByZeroOnEqual(){
         if (lastOperation.contains("/") && varSecond == 0){
-            return false;
-        } else{
             return true;
+        } else{
+            return false;
         }
     }
 }

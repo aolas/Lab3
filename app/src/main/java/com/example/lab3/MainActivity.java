@@ -109,29 +109,52 @@ public class MainActivity extends AppCompatActivity {
     }
     public void onBtnChangeSign(View view) {
         displayData.setText(calc.changeSign(displayData.getText().toString()));
-        calc.setVariable(displayData.getText().toString());
+        //calc.setVariable(displayData.getText().toString());
     }
     public void onBtnSum(View view) {
-        getDisplayDataAll.setText( calc.setOperation(getString(R.string.plus)) );
-        displayData.setText("");
+        if (!calc.divisionByZeroOnEqual()){
+            getDisplayDataAll.setText( calc.setOperation(getString(R.string.plus)) );
+            displayData.setText("");
+        }else{
+            message.setText(R.string.zero);
+            message.show();
+        }
     }
     public void onMinusClick(View view){
-        getDisplayDataAll.setText( calc.setOperation(getString(R.string.minus)) );
-        displayData.setText("");
+        if (!calc.divisionByZeroOnEqual()){
+            getDisplayDataAll.setText( calc.setOperation(getString(R.string.minus)) );
+            displayData.setText("");
+        }else{
+            message.setText(R.string.zero);
+            message.show();
+        }
+
 
     }
     public void onMultiplyClick(View view){
-        getDisplayDataAll.setText( calc.setOperation(getString(R.string.multiply)));
-        displayData.setText("");
+        if (!calc.divisionByZeroOnEqual()){
+            getDisplayDataAll.setText( calc.setOperation(getString(R.string.multiply)));
+            displayData.setText("");
+        }else{
+            message.setText(R.string.zero);
+            message.show();
+        }
+
     }
     public void onDivisionClick(View view){
-        getDisplayDataAll.setText( calc.setOperation(getString(R.string.div)));
-        displayData.setText("");
+        if (!calc.divisionByZeroOnEqual()){
+            getDisplayDataAll.setText( calc.setOperation(getString(R.string.div)));
+            displayData.setText("");
+        }else{
+            message.setText(R.string.zero);
+            message.show();
+        }
+
     }
 
     public void onEqualClick(View view){
         if (calc.canUseEquual()) {
-            calc.setVariable(displayData.getText().toString());
+            //calc.setVariable(displayData.getText().toString());
             calc.compleatOperation();
             displayData.setText(calc.gettVariable());
             getDisplayDataAll.setText("");
@@ -152,7 +175,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void onSqClick(View view){
-        displayData.setText(calc.getSq(displayData.getText().toString()));
+        displayData.setText(calc.getSq());
     }
     public void onOverXClick(View view){
         if (!calc.checkForZero(displayData.getText().toString())){
