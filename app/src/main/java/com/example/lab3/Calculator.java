@@ -13,7 +13,7 @@ public class Calculator{
         lastOperation="";
     }
     void setVariable(String variable){
-        if (stateSecond == false){
+        if (!stateSecond){
 
             varFirst = Float.parseFloat(variable);
 
@@ -25,7 +25,7 @@ public class Calculator{
     }
 
     void setVariable(float variable){
-        if (stateSecond == false){
+        if (!stateSecond){
             varFirst = variable;
         } else {
             varSecond = variable;
@@ -34,7 +34,7 @@ public class Calculator{
         operationAdded = false;
     }
     String setOperation(String operation){
-            if (stateSecond == false || operationAdded == true){
+            if (!stateSecond || operationAdded){
                 lastOperation = operation;
                 stateSecond = true;
                 operationAdded = true;
@@ -47,11 +47,7 @@ public class Calculator{
             return varFirst + operation;
     }
     boolean canUseEquual(){
-        if (!divisionByZeroOnEqual() && useEqual){
-            return true;
-        } else{
-            return false;
-        }
+        return !divisionByZeroOnEqual() && useEqual;
     }
     String getSqrt(){
         setVariable((float) Math.sqrt(getCurrentVariable()));
@@ -74,18 +70,14 @@ public class Calculator{
     }
     public boolean checkForZero(String input){
         if (validNumber(input) ){
-            if (getCurrentVariable() == 0 && !input.contains(".")) {
-                return true;
-            }else{
-                return false;
-            }
+            return (getCurrentVariable() == 0) && !input.contains(".");
         } else{
             return false;
         }
 
     }
     public void compleatOperation(){
-        if (stateSecond == true){
+        if (stateSecond){
             if (lastOperation.compareTo("+") == 0) {
                 sumVariables();
             } else if (lastOperation.compareTo("-") == 0) {
@@ -115,9 +107,9 @@ public class Calculator{
 
     }
     public String eraseLastChar(String data){
-        if (validNumber(data) == true ) {
+        if (validNumber(data)) {
             data = data.substring(0, data.length() - 1);
-            if(validNumber(data) != true) {
+            if(!validNumber(data)) {
                 setVariable(0);
                 return "0";
             }
@@ -127,7 +119,7 @@ public class Calculator{
 
     public String changeSign(String data){
         float numberF;
-        if (validNumber(data) == true){
+        if (validNumber(data)){
             numberF = getCurrentVariable() * -1;
             setVariable(numberF);
             return String.valueOf(numberF);
@@ -171,10 +163,6 @@ public class Calculator{
         return data.contains(".");
     }
     public boolean divisionByZeroOnEqual(){
-        if (lastOperation.contains("/") && varSecond == 0){
-            return true;
-        } else{
-            return false;
-        }
+        return lastOperation.contains("/") && varSecond == 0;
     }
 }
