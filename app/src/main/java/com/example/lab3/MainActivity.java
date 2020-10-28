@@ -13,7 +13,6 @@ public class MainActivity extends AppCompatActivity {
     TextView displayData;
     TextView getDisplayDataAll;
     Calculator calc = new Calculator();
-
     String textas;
     Toast message;
 

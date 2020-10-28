@@ -46,6 +46,9 @@ public class Calculator{
             useEqual = false;
             return varFirst + operation;
     }
+    String getFirstValue(){
+        return String.valueOf(this.varFirst);
+    }
     boolean canUseEquual(){
         return !divisionByZeroOnEqual() && useEqual;
     }

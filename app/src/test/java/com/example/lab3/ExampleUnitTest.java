@@ -10,8 +10,17 @@ import static org.junit.Assert.*;
  * @see <a href="http://d.android.com/tools/testing">Testing documentation</a>
  */
 public class ExampleUnitTest {
+
     @Test
-    public void addition_isCorrect() {
-        assertEquals(4, 2 + 2);
+    public void testCalculatorLogic(){
+        Calculator calc = new Calculator();
+        String result;
+        calc.setDefaultStates();
+        calc.setVariable("99");
+        calc.setOperation("+");
+        calc.setVariable("2");
+        calc.compleatOperation();
+        result = calc.gettVariable();
+        assertEquals("101.0", result);
     }
 }
